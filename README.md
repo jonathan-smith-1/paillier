@@ -1,8 +1,8 @@
 Pure Python Paillier Homomorphic Cryptosystem
 =============================================
 
-This is a very basic pure Python implementation of the Paillier
-Homomorphic Cryptosystem.
+This is a fork of [mikeivanov][1]'s pure Python implementation of the 
+[Paillier Homomorphic Cryptosystem][2], modified to run on Python3.
 
 Homomorphic Cryptosystems
 -------------------------
@@ -16,6 +16,9 @@ plaintexts.
 In other words, a homomorphic cryptosystem enables cryptographically
 secure computations in an untrusted environment.
 
+This is important because it allows models to be trained on encrypted data 
+(e.g. preserving patient privacy in healthcare applications).
+
 Paillier cryptosystem
 ---------------------
 
@@ -27,12 +30,13 @@ encrypted number by an unencrypted multiplier.
 Implementation
 --------------
 
-This pure Python implementation exploits Python's long type with
-its arbitrary precision arithmetics. Public key is serializable, thus
-it can be pickled along with the encrypted numbers and sent to a
+This pure Python implementation exploits the int type in Python 3 with
+its arbitrary precision arithmetic. The generated public key is serializable, 
+so it can be pickled along with the encrypted numbers and sent to a
 remote server for computation.
 
-The code is loosely based on [Thep][1] and a few ActiveState recipes.
+According to [mikeivanov][1]'s repository, the code is loosely based on 
+[Thep][3] and a few ActiveState recipes.
 
 Please note that this implementation's primary purpose is education;
 it is **not suitable for production use** as it is.
@@ -40,53 +44,73 @@ it is **not suitable for production use** as it is.
 Installation and Tests
 ----------------------
 
-The paillier.py module has no external dependencies besides included
+The paillier.py module has no external dependencies besides the included
 primes.py. Simply run demo.py to see it in action.
 
-To run unit tests please install [Nose][2]:
+    $ git clone https://github.com/jonathan-smith-1/paillier
+    $ cd paillier
+    $ pip install .
+    $ python demo.py
+    ...............
+    Generating keypair...
+    x = 3
+    Encrypting x...
+    cx = 14788818202106802157979663709685399775685304772689176951138395154...
+    y = 5
+    Encrypting y...
+    cy = 15845129408592377991051835070770332917255019576438102739007785409...
+    Computing cx + cy...
+    cz = 35054170028941356642770510397991701544909261570444245993603636388...
+    Decrypting cz...
+    z = 8
+    Computing decrypt((cz + 2) * 3) ...
+    result = 30
 
-    $ pip install -r requirements.txt
+To run unit tests please install [Nose][4]:
+
+    $ pip install -r requirements_dev.txt
     $ nosetests
     ...............
-    Ran 814 tests in 11.544s
+    Ran 816 tests in 7.715s
     OK
 
 Usage
 -----
 
-    $ ipython
-    Python 2.7.1 (r271:86832, Jun 16 2011, 16:59:05)
-    Type "copyright", "credits" or "license" for more information.
+    $ python
+    Python 3.6.5 (v3.6.5:f59c0932b4, Mar 28 2018, 03:03:55) 
+    Type "help", "copyright", "credits" or "license" for more information.
+    
+    >>> from paillier.paillier import *
 
-    In [1]: from paillier.paillier import *
+    >>> priv, pub = generate_keypair(128)
 
-    In [2]: priv, pub = generate_keypair(128)
+    >>> x = encrypt(pub, 2)
 
-    In [3]: x = encrypt(pub, 2)
+    >>> y = encrypt(pub, 3)
 
-    In [4]: y = encrypt(pub, 3)
+    >>> x, y
+    (58270969461107207535519595770..., 84176641665375048505734864...)
 
-    In [5]: x,y
-    Out[5]:
-    (72109737005643982735171545918..., 9615446835366886883470187...)
+    >>> z = e_add(pub, x, y)
 
-    In [6]: z = e_add(pub, x, y)
+    >>> z
+    543656852031605188344427268...
 
-    In [7]: z
-    Out[7]: 71624230283745591274688669...
-
-    In [8]: decrypt(priv, pub, z)
-    Out[8]: 5L
+    >>> decrypt(priv, pub, z)
+    5
 
 
 License and Copyright
 ---------------------
-LGPL v3, see [LICENSE][3]
+LGPL v3, see [LICENSE][5]
 
 (C) 2011 Mike Ivanov
 
 
-[1]: http://code.google.com/p/thep/
-[2]: http://readthedocs.org/docs/nose/en/latest/index.html
-[3]: https://github.com/mikeivanov/paillier/blob/master/LICENSE
+[1]: https://github.com/mikeivanov/paillier
+[2]: https://en.wikipedia.org/wiki/Paillier_cryptosystem
+[3]: http://code.google.com/p/thep/
+[4]: http://readthedocs.org/docs/nose/en/latest/index.html
+[5]: https://github.com/mikeivanov/paillier/blob/master/LICENSE
 
