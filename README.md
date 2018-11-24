@@ -7,30 +7,30 @@ This is a fork of [mikeivanov][1]'s pure Python implementation of the
 Homomorphic Cryptosystems
 -------------------------
 
-The idea of homomorphic computation is to encrypt some numbers,
-perform algebraic operations like "add" and "multiply" on
-*cyphertexts*, then decrypt the result and find it to be exactly the
+The idea of homomorphic computation is to encrypt some numbers into 
+*cyphertexts*, perform algebraic operations like "add" and "multiply" on
+the cyphertexts, and then decrypt the result.  The result is exactly the
 same as if corresponding "+" and "*" operations were applied to the
-plaintexts.
+original numbers.
 
 In other words, a homomorphic cryptosystem enables cryptographically
 secure computations in an untrusted environment.
 
-This is important because it allows models to be trained on encrypted data 
+This is important because it allows models to be trained on *encrypted* data 
 (e.g. preserving patient privacy in healthcare applications).
 
 Paillier cryptosystem
 ---------------------
 
-Paillier cryptosystem is a probabilistic asymmetric algorithm for
-public key cryptography. Paillier cryptosystem is partially
+The Paillier cryptosystem is a probabilistic asymmetric algorithm for
+public key cryptography. It is known as partially
 homomorphic as it can only add encrypted numbers or multiply an
 encrypted number by an unencrypted multiplier.
 
 Implementation
 --------------
 
-This pure Python implementation exploits the int type in Python 3 with
+This pure Python implementation exploits the `int` type in Python 3 with
 its arbitrary precision arithmetic. The generated public key is serializable, 
 so it can be pickled along with the encrypted numbers and sent to a
 remote server for computation.
