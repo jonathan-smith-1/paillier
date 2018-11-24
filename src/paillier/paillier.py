@@ -1,5 +1,5 @@
 import math
-from .paillier import primes
+from paillier import primes
 
 def invmod(a, p, maxiter=1000000):
     """The multiplicitive inverse of a in the integers modulo p:
