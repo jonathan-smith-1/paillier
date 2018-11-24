@@ -32,7 +32,7 @@ def test_decrypt():
     for i in range(5):
         priv, pub = paillier.generate_keypair(64)
         for j in range(5):
-            pt = long(random.randint(0, 1000000))
+            pt = int(random.randint(0, 1000000))
             ct = paillier.encrypt(pub, pt)
             assert pt == paillier.decrypt(priv, pub, ct)
 
@@ -40,8 +40,8 @@ def test_e_add():
     for i in range(5):
         priv, pub = paillier.generate_keypair(128)
         for j in range(5):
-            a = long(random.randint(0, 1000000))
-            b = long(random.randint(0, 1000000))
+            a = int(random.randint(0, 1000000))
+            b = int(random.randint(0, 1000000))
             ca, cb = paillier.encrypt(pub, a), paillier.encrypt(pub, b)
             cs = paillier.e_add(pub, ca, cb)
             s = paillier.decrypt(priv, pub, cs)
@@ -51,7 +51,7 @@ def test_e_add_const():
     for i in range(5):
         priv, pub = paillier.generate_keypair(128)
         for j in range(5):
-            a = long(random.randint(0, 1000000))
+            a = int(random.randint(0, 1000000))
             c = paillier.encrypt(pub, a)
             for n in range(0, 11):
                 cs = paillier.e_add_const(pub, c, n)
@@ -62,7 +62,7 @@ def test_e_mul_const():
     for i in range(5):
         priv, pub = paillier.generate_keypair(128)
         for j in range(5):
-            a = long(random.randint(0, 1000000))
+            a = int(random.randint(0, 1000000))
             c = paillier.encrypt(pub, a)
             for n in range(0, 11):
                 cs = paillier.e_mul_const(pub, c, n)
