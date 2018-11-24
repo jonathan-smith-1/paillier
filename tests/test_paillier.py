@@ -1,6 +1,7 @@
 import random
 from nose.tools import assert_raises
-import paillier
+from paillier import paillier
+
 
 def test_invmod():
     assert_raises(ValueError,  paillier.invmod, 0, 7)
@@ -46,7 +47,7 @@ def test_e_add():
             cs = paillier.e_add(pub, ca, cb)
             s = paillier.decrypt(priv, pub, cs)
             assert a + b == s
-        
+
 def test_e_add_const():
     for i in range(5):
         priv, pub = paillier.generate_keypair(128)
@@ -57,7 +58,7 @@ def test_e_add_const():
                 cs = paillier.e_add_const(pub, c, n)
                 s = paillier.decrypt(priv, pub, cs)
                 assert a + n == s
-        
+
 def test_e_mul_const():
     for i in range(5):
         priv, pub = paillier.generate_keypair(128)
@@ -68,4 +69,3 @@ def test_e_mul_const():
                 cs = paillier.e_mul_const(pub, c, n)
                 s = paillier.decrypt(priv, pub, cs)
                 assert a * n == s
-
