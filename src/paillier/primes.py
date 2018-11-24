@@ -4,9 +4,9 @@ import sys
 def ipow(a, b, n):
     """calculates (a**b) % n via binary exponentiation, yielding itermediate
        results as Rabin-Miller requires"""
-    A = a = long(a % n)
+    A = a = int(a % n)
     yield A
-    t = 1L
+    t = 1
     while t <= b:
         t <<= 1
 
@@ -41,7 +41,7 @@ def is_probably_prime(possible, k=None):
             return True
         if possible % i == 0:
             return False
-    for i in xrange(k):
+    for i in range(k):
         test = random.randrange(2, possible - 1) | 1
         if rabin_miller_witness(test, possible):
             return False

@@ -1,5 +1,5 @@
 import math
-from paillier import primes
+from .paillier import primes
 
 def invmod(a, p, maxiter=1000000):
     """The multiplicitive inverse of a in the integers modulo p:
@@ -10,7 +10,7 @@ def invmod(a, p, maxiter=1000000):
         raise ValueError('0 has no inverse mod %d' % p)
     r = a
     d = 1
-    for i in xrange(min(p, maxiter)):
+    for i in range(min(p, maxiter)):
         d = ((p // r + 1) * d) % p
         r = (d * a) % p
         if r == 1:
@@ -63,7 +63,7 @@ def generate_keypair(bits):
 
 def encrypt(pub, plain):
     while True:
-        r = primes.generate_prime(long(round(math.log(pub.n, 2))))
+        r = primes.generate_prime(int(round(math.log(pub.n, 2))))
         if r > 0 and r < pub.n:
             break
     x = pow(r, pub.n, pub.n_sq)
