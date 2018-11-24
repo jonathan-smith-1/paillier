@@ -1,4 +1,4 @@
-import primes
+from paillier import primes
 
 def test_ipows():
     for a in range(1, 10):
